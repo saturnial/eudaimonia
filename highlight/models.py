@@ -1,3 +1,5 @@
+import datetime
+from django.utils import timezone
 from django.db import models
 
 
@@ -7,3 +9,6 @@ class Moment(models.Model):
 
   def __unicode__(self):
     return self.text
+
+  def was_published_today(self):
+    return self.timestamp >= timezone.now() - datetime.timedelta(days=1)
