@@ -37,7 +37,14 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'highlight',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'south',
 )
+
+REST_FRAMEWORK = {
+    'PAGINATE_BY': 10
+}
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
