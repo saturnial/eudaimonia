@@ -40,11 +40,8 @@ INSTALLED_APPS = (
     'rest_framework',
     'rest_framework.authtoken',
     'south',
+    'django_facebook',
 )
-
-REST_FRAMEWORK = {
-    'PAGINATE_BY': 10
-}
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -88,3 +85,32 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# REST framework integration
+
+REST_FRAMEWORK = {
+    'PAGINATE_BY': 10
+}
+
+# Facebook integration
+
+FACEBOOK_APP_ID = 194793243978205
+FACEBOOK_APP_SECRET = 'a92584eaa7be0d36ba2b2dc37e307e27'
+AUTH_USER_MODEL = 'django_facebook.FacebookCustomUser'
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'django.core.context_processors.tz',
+    'django.core.context_processors.request',
+    'django.contrib.messages.context_processors.messages',
+    'django_facebook.context_processors.facebook',
+)
+
+AUTHENTICATION_BACKENDS = (
+    'django_facebook.auth_backends.FacebookBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)

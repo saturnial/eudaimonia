@@ -1,10 +1,12 @@
 import datetime
 from django.utils import timezone
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 from django.db.models.signals import post_save
+from django.contrib.auth.models import User
+
 
 @receiver(post_save, sender=User)
 def create_auth_token(sender, instance=None, created=False, **kwargs):
@@ -20,7 +22,7 @@ class Moment(models.Model):
   user = models.ForeignKey(User)
 
   class Meta:
-    ordering = ('created',)
+    ordering = ('modified',)
 
   def __unicode__(self):
     return self.text
@@ -31,11 +33,15 @@ class Moment(models.Model):
   def can_user_edit(self, user):
     return user == self.user or not user
 
+
+# TODO(kayvon): Implement these later
+"""
 class Like(models.Model):
   liker = models.ForeignKey(User)
   moment = models.ForeignKey(Moment)
   created = models.DateTimeField(auto_now_add=True)
   modified = models.DateTimeField(auto_now=True)
+
 
 class Friendship(models.Model):
   inviter = models.ForeignKey(User, related_name='inviter')
@@ -45,14 +51,17 @@ class Friendship(models.Model):
   created = models.DateTimeField(auto_now_add=True)
   modified = models.DateTimeField(auto_now=True)
 
+
 class FriendTag(models.Model):
   moment = models.ForeignKey(Moment)
   friend_tagged = models.ForeignKey(User)
   created = models.DateTimeField(auto_now_add=True)
   modified = models.DateTimeField(auto_now=True)
 
+
 class PushNotification(models.Model):
   user = models.ForeignKey(User)
   notification_type = models.CharField(max_length=100)
   created = models.DateTimeField(auto_now_add=True)
   modified = models.DateTimeField(auto_now=True)
+"""

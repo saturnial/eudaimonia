@@ -7,7 +7,6 @@ admin.autodiscover()
 
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
-router.register(r'groups', views.GroupViewSet)
 router.register(r'moments', views.MomentViewSet)
 
 urlpatterns = patterns('',
@@ -16,4 +15,6 @@ urlpatterns = patterns('',
     url(r'^api-token-auth/', 'rest_framework.authtoken.views.obtain_auth_token'),
     url(r'^moments/', include('highlight.urls')),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^facebook/', include('django_facebook.urls')),
+    url(r'^accounts/', include('django_facebook.auth_urls')),
 )
